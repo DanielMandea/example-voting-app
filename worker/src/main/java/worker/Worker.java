@@ -10,6 +10,8 @@ class Worker {
     try {
       Jedis redis = connectToRedis("redis", "redis_password");
 
+      Connection dbConn = connectToDB("db");
+
       System.err.println("Watching vote queue");
 
       while (true) {
@@ -44,11 +46,10 @@ class Worker {
     }
   }
 
-  static Jedis connectToRedis(String host, String pwd) throws SQLException {
+  static Jedis connectToRedis(String host, String pwd) {
     Jedis conn = new Jedis(host);
-    conn.auth("redis_password");
-
-    Connection dbConn = connectToDB("db");
+    String result = conn.auth(pwd);
+    System.err.println(result);
     while (true) {
       try {
         conn.keys("*");

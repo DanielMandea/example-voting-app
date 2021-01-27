@@ -8,11 +8,7 @@ import org.json.JSONObject;
 class Worker {
   public static void main(String[] args) {
     try {
-      Jedis redis = connectToRedis("redis");
-      redis.auth("redis_password");
-      System.out.println("Connection succeeded");
-      
-      Connection dbConn = connectToDB("db");
+      Jedis redis = connectToRedis("redis", "redis_password");
 
       System.err.println("Watching vote queue");
 
@@ -48,9 +44,11 @@ class Worker {
     }
   }
 
-  static Jedis connectToRedis(String host) {
+  static Jedis connectToRedis(String host, String pwd) throws SQLException {
     Jedis conn = new Jedis(host);
+    conn.auth("redis_password");
 
+    Connection dbConn = connectToDB("db");
     while (true) {
       try {
         conn.keys("*");

@@ -40,6 +40,7 @@ async.retry(
     pool.connect(function(err, client, done) {
       if (err) {
         console.error("Waiting for db");
+        console.error("FUCKOLOGY");
         console.error(err.message);
       }
       callback(err, client);

@@ -9,6 +9,10 @@ class Worker {
   public static void main(String[] args) {
     try {
       Jedis redis = connectToRedis("redis");
+      jedis.auth("redis_password");
+      System.out.println("Connection succeeded");
+      System.out.println("Service is running: "+jedis.ping());
+      
       Connection dbConn = connectToDB("db");
 
       System.err.println("Watching vote queue");

@@ -24,7 +24,14 @@ io.sockets.on('connection', function (socket) {
 });
 
 var pool = new pg.Pool({
-  connectionString: 'postgres://postgres_user:postgres_password@db/postgres'
+  // connectionString: 'postgres://postgres_user:postgres_password@db/postgres'
+    user: 'postgres_user', 
+    database: 'postrges', 
+    password: 'postgres_password', 
+    host: 'db', 
+    port: 5432, 
+    max: 10, // max number of clients in the pool
+    idleTimeoutMillis: 30000
 });
 
 async.retry(
